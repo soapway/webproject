@@ -93,11 +93,10 @@ function deleteAlert() {
 			<%=name%></p>
 		<div class="col-12 fs-4 text-center">
 			<pre class="premymy"><%=bd.getLyric()%></pre>
-			<%-- 			<p><%=bd.getLyric()%></p> --%>
 		</div>
 		<div class="form-group row">
 			<div style="text-align: right">
-				<c:set var="userId" value="<%=bd.getUser_id()%>"></c:set>
+				<c:set var="userId" value="<%=bd.getUser_id()%>"/>
 				<c:if test="${sessionId == userId}">
 					<a class="btn btn-outline-primary btn-lg" href="./DeleteAction.do?num=<%=bd.getNum()%>" onclick="return deleteAlert();">delete</a>
 					<a class="btn btn-outline-secondary btn-lg" href="./UpdateAction.do?num=<%=bd.getNum()%>&pageNum=<%=nowpage%>">update</a>

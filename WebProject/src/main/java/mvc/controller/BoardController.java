@@ -85,17 +85,67 @@ public class BoardController extends HttpServlet {
 			requestDelete(req);
 			RequestDispatcher rd = req.getRequestDispatcher("./home.jsp");
 			rd.forward(req, resp);
-		} else if(command.equals("/UpdateAction.do")) {
+		} else if(command.equals("/UpdateAction.do")){
 			requestView(req);
-			req.setAttribute("boardAction", "update");
-			RequestDispatcher rd = req.getRequestDispatcher("./writeform.jsp");
+			RequestDispatcher rd = req.getRequestDispatcher("./updateform.jsp");
+			rd.forward(req, resp);
+		} else if(command.equals("/UpdateFormAction.do")) {
+			requestUpdateForm(req);
+			RequestDispatcher rd = req.getRequestDispatcher("./home.jsp");
 			rd.forward(req, resp);
 		}
 
 	}
 
+
+	private void requestUpdateForm(HttpServletRequest req) {
+		// TODO Auto-generated method stub
+		// 게시글 수정
+		BoardDAO dao = BoardDAO.getInstance();
+		String realfolder = getServletContext().getRealPath("/") + "albumart";
+		
+		int maxSize = 15 * 1024 * 1024;
+		String encType = "UTF-8";
+		try {
+
+			MultipartRequest multi = new MultipartRequest(req, realfolder, maxSize, encType, new DefaultFileRenamePolicy());
+			Enumeration files = multi.getFileNames();
+			String fname = (String) files.nextElement();
+			String fileName = multi.getFilesystemName(fname);
+
+			String userid = multi.getParameter("userid");
+			String album = multi.getParameter("album");
+			String artist = multi.getParameter("artist");
+			String genre = multi.getParameter("genre");
+			String lyric = multi.getParameter("lyric");
+			String title = multi.getParameter("title");
+			
+			if(genre == "none") {
+				genre = "alternative";
+			}
+
+			BoardDTO board = new BoardDTO();
+
+			board.setUser_id(userid);
+			board.setAlbum(album);
+			board.setAlbum_art(fileName);
+			board.setArtist(artist);
+			board.setGenre(genre);
+			board.setLyric(lyric);
+			board.setTitle(title);
+			
+			dao.updateBoard(board);
+				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
 	private void requestDelete(HttpServletRequest req) {
 		// TODO Auto-generated method stub
+		// 게시글 삭제
 		int num = Integer.parseInt(req.getParameter("num"));
 		
 		BoardDAO dao = BoardDAO.getInstance();
@@ -105,6 +155,7 @@ public class BoardController extends HttpServlet {
 
 	private void requestIdCheck(HttpServletRequest req) {
 		// TODO Auto-generated method stub
+		// 아이디 중복 체크
 		int result = 0;
 		String user_id = req.getParameter("user_id");
 		BoardDAO dao = BoardDAO.getInstance();
@@ -192,7 +243,6 @@ public class BoardController extends HttpServlet {
 		BoardDAO dao = BoardDAO.getInstance();
 		String realfolder = getServletContext().getRealPath("/") + "albumart";
 		
-		String Act = req.getParameter("Act");
 		int maxSize = 15 * 1024 * 1024;
 		String encType = "UTF-8";
 		try {
@@ -219,12 +269,8 @@ public class BoardController extends HttpServlet {
 			board.setLyric(lyric);
 			board.setTitle(title);
 			
-			if(Act.equals("update")) {
-				dao.updateBoard(board);
-			}else if(Act.equals("insert")){
-				dao.insertBoard(board);
-			}
-			
+			dao.insertBoard(board);
+				
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

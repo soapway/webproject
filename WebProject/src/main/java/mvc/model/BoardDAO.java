@@ -206,6 +206,7 @@ public class BoardDAO {
 
 	}
 
+	// 아이디로 유저 이미지 가져오기
 	public String getUserimgById(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -286,6 +287,7 @@ public class BoardDAO {
 		return board;
 	}
 
+	// 아이디로 이름 가져오기
 	public String getLoginNameById(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -321,6 +323,7 @@ public class BoardDAO {
 
 	}
 
+	// 로그인 정보 가져오기(DB에 있는 아이디와 비밀번호와 일치하는지 확인하기)
 	public boolean getLoginInfo(String id, String password) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -357,6 +360,7 @@ public class BoardDAO {
 		return login_ok;
 	}
 
+	// 회원 추가하기
 	public void insertMember(BoardDTO board) {
 
 		Connection conn = null;
@@ -387,6 +391,7 @@ public class BoardDAO {
 		}
 	}
 
+	// 로그인 후 메뉴에 유저 이미지 띄우기
 	public String getImgForMenu(String id) {
 
 		Connection conn = null;
@@ -419,6 +424,7 @@ public class BoardDAO {
 		return user_img;
 	}
 
+	// 아이디 중복 검사
 	public int getCheckIdDuplicated(String id) {
 		int result = 0;
 		Connection conn = null;
@@ -451,6 +457,7 @@ public class BoardDAO {
 		return result;
 	}
 
+	// 게시글 삭제하기
 	public void deleteBoard(int num) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -476,24 +483,39 @@ public class BoardDAO {
 		}
 	}
 
+	// 게시글 수정하기
 	public void updateBoard(BoardDTO board) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		try {
 			conn = DBConnection.getConnection();
 
-			String sql = "update board set title = ?, artist = ?, album= ?, genre= ?, lyric= ?, album_art = ? where num = ?";
+			String sql1 = "update board set title = ?, artist = ?, album= ?, genre= ?, lyric= ?, album_art = ? where num = ?";
+			String sql2 = "update board set title = ?, artist = ?, album= ?, genre= ?, lyric= ? where num = ?";
 
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, board.getTitle());
-			pstmt.setString(2, board.getArtist());
-			pstmt.setString(3, board.getAlbum());
-			pstmt.setString(4, board.getGenre());
-			pstmt.setString(5, board.getLyric());
-			pstmt.setString(6, board.getAlbum_art());
-			pstmt.setInt(7, board.getNum());
+			if (board.getAlbum_art().isEmpty()) {
+				pstmt = conn.prepareStatement(sql2);
+				pstmt.setString(1, board.getTitle());
+				pstmt.setString(2, board.getArtist());
+				pstmt.setString(3, board.getAlbum());
+				pstmt.setString(4, board.getGenre());
+				pstmt.setString(5, board.getLyric());
+				pstmt.setInt(6, board.getNum());
 
-			pstmt.executeUpdate();
+				pstmt.executeUpdate();
+			} else {
+				pstmt = conn.prepareStatement(sql1);
+				pstmt.setString(1, board.getTitle());
+				pstmt.setString(2, board.getArtist());
+				pstmt.setString(3, board.getAlbum());
+				pstmt.setString(4, board.getGenre());
+				pstmt.setString(5, board.getLyric());
+				pstmt.setString(6, board.getAlbum_art());
+				pstmt.setInt(7, board.getNum());
+
+				pstmt.executeUpdate();
+			}
+
 		} catch (Exception ex) {
 			System.out.println("updateBoard() 에러 : " + ex);
 		} finally {
