@@ -81,11 +81,10 @@ String folder = "./albumart/";
 				<c:forEach var="i" begin="1" end="<%=total_page%>">
 					<a href="<c:url value="./SearchAction.do?pageNum=${i}" /> "> <c:choose>
 							<c:when test="${pageNum==i}">
-								<font color='4C5317'><b> [${i}]</b></font>
+								<font color='4C5317'><b> ${i}</b></font>
 							</c:when>
 							<c:otherwise>
-								<font color='4C5317'> [${i}]</font>
-
+								<font color='4C5317'> ${i}</font>
 							</c:otherwise>
 						</c:choose>
 					</a>

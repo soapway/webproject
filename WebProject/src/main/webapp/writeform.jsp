@@ -40,7 +40,7 @@ String sessionId = (String) session.getAttribute("sessionId");
 				width="72" height="57">
 			<h2>Add new Lyric</h2>
 		</div>
-		<form action="/WriteFormAction.do" class="form-horizontal"
+		<form action="./WriteFormAction.do" class="form-horizontal"
 			name="newWrite" id="newWrite" method="post"
 			enctype="multipart/form-data">
 			<input name="userid" type="hidden" class="form-control"

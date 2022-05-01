@@ -36,7 +36,7 @@
 				<div class="row mb-3">
 					<div class="col-sm-2">
 						<select class="form-select" name="items">
-							<option value="all">all</option>
+							<option value="all" selected>all</option>
 							<option value="title">title</option>
 							<option value="artist">artist</option>
 						</select>
