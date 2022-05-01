@@ -503,6 +503,7 @@ public class BoardDAO {
 				pstmt.setInt(6, board.getNum());
 
 				pstmt.executeUpdate();
+				
 			} else {
 				pstmt = conn.prepareStatement(sql1);
 				pstmt.setString(1, board.getTitle());

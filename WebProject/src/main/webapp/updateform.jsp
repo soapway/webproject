@@ -44,7 +44,7 @@ String name = (String) request.getAttribute("name");
 				width="72" height="57">
 			<h2>Add new Lyric</h2>
 		</div>
-		<form action="/UpdateFormAction.do" class="form-horizontal"
+		<form action="./UpdateFormAction.do" class="form-horizontal"
 			name="newWrite" id="newWrite" method="post"
 			enctype="multipart/form-data">
 			<input name="userid" type="hidden" class="form-control"
