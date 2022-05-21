@@ -322,6 +322,40 @@ public class BoardDAO {
 		return name;
 
 	}
+	
+	public int getBoardCountById(String id) {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select count(*) from board where user_id = ?";
+		try {
+			conn = DBConnection.getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+
+			if (rs.next())
+				count = rs.getInt(1);
+			
+			return count;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("getBoardCountById() 에러 : " + e);
+		}finally {
+			try {
+				if (rs != null)
+					rs.close();
+				if (pstmt != null)
+					pstmt.close();
+				if (conn != null)
+					conn.close();
+			} catch (Exception ex) {
+				throw new RuntimeException(ex.getMessage());
+			}
+		}
+		return count;
+	}
 
 	// 로그인 정보 가져오기(DB에 있는 아이디와 비밀번호와 일치하는지 확인하기)
 	public boolean getLoginInfo(String id, String password) {

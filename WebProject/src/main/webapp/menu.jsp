@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="./src/bootstrap.min.css" />
+<script type="text/javascript" src="./src/bootstrap.bundle.min.js"></script>
 <style>
 .bd-placeholder-img {
 	font-size: 1.125rem;
@@ -44,8 +45,8 @@ String sessionId = (String) session.getAttribute("sessionId");
 					String userimg = (String) request.getAttribute("userimg");
 					%>
 					<li class="nav-item"><img alt="user img"
-						src="<%=folder%><%=userimg%>"
-						class="rounded-circle" width="40px" height="40px"></li>
+						src="<%=folder%><%=userimg%>" class="rounded-circle" width="40px"
+						height="40px"></li>
 					<li class="nav-item"><a
 						href="<c:url value="./LogoutAction.do"/>"
 						class="nav-link link-dark px-2">logout</a></li>

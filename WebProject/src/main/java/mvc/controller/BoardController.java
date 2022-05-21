@@ -226,8 +226,10 @@ public class BoardController extends HttpServlet {
 		boolean login_ok = dao.getLoginInfo(id, password);
 		if (login_ok) {
 			String userimg = dao.getUserimgById(id);
+			String username = dao.getLoginNameById(id);
 			HttpSession session = req.getSession();
 			session.setAttribute("sessionId", id);
+			req.setAttribute("username", username);
 			req.setAttribute("userimg", userimg);
 			return true;
 		} else {
